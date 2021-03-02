@@ -4,7 +4,7 @@ WiFiClient client;
 WiFiServer server(80);
 
 #define led D5
-
+int value= LOW; 
 void setup() 
 {
   // put your setup code here, to run once:
@@ -41,4 +41,26 @@ void loop()
       digitalWrite(led, LOW);
     }
   }
+  client.println("HTTP/1.1 200 OK");
+  client.println("Content-type:text/html");
+  client.println(""); //  do not forget this one
+  client.println("<!DOCTYPE HTML>");
+  client.println("<html>");
+ 
+  client.print("Led pin is now: ");
+ 
+  if(value == HIGH) {
+    client.print("On");
+  } else {
+    client.print("Off");
+  }
+  client.println("<br><br>");
+  client.println("<a href=\"/ledon\"\"><button>Turn On </button></a>");  
+  client.println("<a href=\"/ledoff\"\"><button>Turn Off </button></a><br>");  
+  client.println("</html>");
+ 
+  delay(1);
+ // Serial.println("Client disonnected");
+  //Serial.println("");
+ 
 }
